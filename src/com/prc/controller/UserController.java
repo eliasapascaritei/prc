@@ -1,4 +1,4 @@
-package com.daniel.controller;
+package com.prc.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,9 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-
-import com.daniel.dao.UserDao;
-import com.daniel.model.User;
+import com.prc.dao.UserDao;
+import com.prc.model.User;
 
 public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;

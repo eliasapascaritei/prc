@@ -1,9 +1,10 @@
-package com.daniel.model;
+package com.prc.model;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import com.daniel.dao.UserDao;
+
+import com.prc.dao.UserDao;
 
 public class User {
 
