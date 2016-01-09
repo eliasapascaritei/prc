@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +23,8 @@ public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static String INSERT_OR_EDIT = "/user.jsp";
     private static String LIST_USER = "/listUser.jsp";
+    private static String SEARCH_USER = "/searchUser.jsp";
+    
     private UserDao dao;
 
     public UserController() {
@@ -42,7 +46,19 @@ public class UserController extends HttpServlet {
             int userId = Integer.parseInt(request.getParameter("userId"));
             User user = dao.getUserById(userId);
             request.setAttribute("user", user);
-        } else if (action.equalsIgnoreCase("listUser")){
+        }else if(action.equalsIgnoreCase("search")){
+        	forward = SEARCH_USER;
+        }
+        else if(action.equalsIgnoreCase("show")){
+        	//forward = LIST_USER;
+        	response.setContentType("application/json");
+        	String s = request.getParameter("cnp");
+        	System.out.println("param:   "+s);
+        	List<User> users = new ArrayList<User>();
+        	users.add(dao.getUserByCnp(s));
+        	//request.setAttribute("users", users);
+        }
+        else if (action.equalsIgnoreCase("listUser")){
             forward = LIST_USER;
             request.setAttribute("users", dao.getAllUsers());
         } else {

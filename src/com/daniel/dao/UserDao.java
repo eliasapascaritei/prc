@@ -123,7 +123,7 @@ public class UserDao {
 				user.setUserid(rs.getInt("userid"));
 				user.setFirstName(rs.getString("firstname"));
 				user.setLastName(rs.getString("lastname"));
-				user.setCnp(rs.getString("email"));
+				user.setCnp(rs.getString("cnp"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
