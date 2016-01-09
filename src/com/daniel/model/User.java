@@ -1,6 +1,9 @@
 package com.daniel.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import com.daniel.dao.UserDao;
 
 public class User {
 
@@ -40,8 +43,21 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [userid=" + userid + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", CNP=" + cnp + "]";
+		return "{ \"userid\":" + userid + ",\"firstName\":\"" + firstName
+				+ "\", \"lastName\":\"" + lastName + "\", \"CNP\":\"" + cnp + "\"}";
+	}
+	public String JsToString(){
+		List<User> users = new ArrayList<User>();
+		UserDao dao = new UserDao();
+		users = dao.getAllUsers();
+		String s = "[";
+		for(User elem : users){
+			s += elem.toString() + ",";
+			
+		}
+		s += "]";
+		return s;
+				
 	}
 	
 	

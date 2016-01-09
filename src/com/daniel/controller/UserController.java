@@ -2,6 +2,7 @@ package com.daniel.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -50,13 +51,13 @@ public class UserController extends HttpServlet {
         	forward = SEARCH_USER;
         }
         else if(action.equalsIgnoreCase("show")){
-        	//forward = LIST_USER;
-        	response.setContentType("application/json");
+        	//response.setContentType("application/json");
+        	//PrintWriter out = response.getWriter();
         	String s = request.getParameter("cnp");
         	System.out.println("param:   "+s);
-        	List<User> users = new ArrayList<User>();
-        	users.add(dao.getUserByCnp(s));
-        	//request.setAttribute("users", users);
+        	User users = dao.getUserByCnp(s);
+        	//out.println(users.toString());
+        	request.setAttribute("users", users);
         }
         else if (action.equalsIgnoreCase("listUser")){
             forward = LIST_USER;

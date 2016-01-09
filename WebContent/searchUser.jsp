@@ -12,7 +12,7 @@
  <form method="POST" action='show' name="frmSearchUser">
   CNP : <input type="text" name="cnp"/>
             <br br br /> 
-            <a href="UserController?action=show&cnp=<c:out value="${cnp}"/>">Search</a>
+            <a href="JsonController?action=show&cnp=<c:out value="${cnp}"/>">Search</a>
     </form>
 
 </body>
