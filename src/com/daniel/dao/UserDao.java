@@ -1,5 +1,6 @@
 package com.daniel.dao;
 
+import java.io.Console;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,13 +24,12 @@ public class UserDao {
 	public void addUser(User user) {
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("insert into users(userid,firstname,lastname,dob,email) values (?, ?, ?, ?, ? )");
+					.prepareStatement("insert into users values (?, ?, ?, ? )");
 			// Parameters start with 1
 			preparedStatement.setInt(1, new Random().nextInt(1000));
 			preparedStatement.setString(2, user.getFirstName());
 			preparedStatement.setString(3, user.getLastName());
-			preparedStatement.setDate(4, new java.sql.Date(user.getDob().getTime()));
-			preparedStatement.setString(5, user.getEmail());
+			preparedStatement.setString(4, user.getCnp());
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -53,14 +53,14 @@ public class UserDao {
 	public void updateUser(User user) {
 		try {
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("update users set firstname=?, lastname=?, dob=?, email=?" +
+					.prepareStatement("update users set firstname=?, lastname=?, cnp=?" +
 							"where userid=?");
 			// Parameters start with 1
 			preparedStatement.setString(1, user.getFirstName());
 			preparedStatement.setString(2, user.getLastName());
-			preparedStatement.setDate(3, new java.sql.Date(user.getDob().getTime()));
-			preparedStatement.setString(4, user.getEmail());
-			preparedStatement.setInt(5, user.getUserid());
+			//preparedStatement.setDate(3, new java.sql.Date(user.getDob().getTime()));
+			preparedStatement.setString(3, user.getCnp());
+			preparedStatement.setInt(4, user.getUserid());
 			preparedStatement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -78,8 +78,8 @@ public class UserDao {
 				user.setUserid(rs.getInt("userid"));
 				user.setFirstName(rs.getString("firstname"));
 				user.setLastName(rs.getString("lastname"));
-				user.setDob(rs.getDate("dob"));
-				user.setEmail(rs.getString("email"));
+				//user.setDob(rs.getDate("dob"));
+				user.setCnp(rs.getString("cnp"));
 				users.add(user);
 			}
 		} catch (SQLException e) {
@@ -101,8 +101,29 @@ public class UserDao {
 				user.setUserid(rs.getInt("userid"));
 				user.setFirstName(rs.getString("firstname"));
 				user.setLastName(rs.getString("lastname"));
-				user.setDob(rs.getDate("dob"));
-				user.setEmail(rs.getString("email"));
+				//user.setDob(rs.getDate("dob"));
+				user.setCnp(rs.getString("cnp"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return user;
+	}
+	
+	public User getUserByCnp(String userCnp) {
+		User user = new User();
+		try {
+			PreparedStatement preparedStatement = connection.
+					prepareStatement("select * from users where cnp=?");
+			preparedStatement.setString(1, userCnp);
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			if (rs.next()) {
+				user.setUserid(rs.getInt("userid"));
+				user.setFirstName(rs.getString("firstname"));
+				user.setLastName(rs.getString("lastname"));
+				user.setCnp(rs.getString("email"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

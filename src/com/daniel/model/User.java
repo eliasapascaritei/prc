@@ -7,8 +7,7 @@ public class User {
 	private int userid;
 	private String firstName;
 	private String lastName;
-	private Date dob;
-	private String email;
+	private String cnp;
 	public int getUserid() {
 		return userid;
 	}
@@ -27,23 +26,22 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public Date getDob() {
+	/*public Date getDob() {
 		return dob;
 	}
 	public void setDob(Date dob) {
 		this.dob = dob;
+	}*/
+	public String getCnp() {
+		return this.cnp;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCnp(String userCnp) {
+		this.cnp = userCnp;
 	}
 	@Override
 	public String toString() {
 		return "User [userid=" + userid + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", dob=" + dob + ", email="
-				+ email + "]";
+				+ ", lastName=" + lastName + ", CNP=" + cnp + "]";
 	}
 	
 	

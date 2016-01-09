@@ -12,11 +12,7 @@
 <title>Add new user</title>
 </head>
 <body>
-    <script>
-        $(function() {
-            $('input[name=dob]').datepicker();
-        });
-    </script>
+    
 
     <form method="POST" action='UserController' name="frmAddUser">
         User ID : <input type="text" readonly="readonly" name="userid"
@@ -27,12 +23,10 @@
         Last Name : <input
             type="text" name="lastName"
             value="<c:out value="${user.lastName}" />" /> <br /> 
-        DOB : <input
-            type="text" name="dob"
-            value="<fmt:formatDate pattern="MM/dd/yyyy" value="${user.dob}" />" /> <br /> 
-        Email : <input type="text" name="email"
-            value="<c:out value="${user.email}" />" /> <br /> <input
-            type="submit" value="Submit" />
+        CNP : <input type="text" name="cnp"
+            value="<c:out value="${user.cnp}" />" /> <br /> 
+            
+            <input type="submit" value="Submit" />
     </form>
 </body>
 </html>

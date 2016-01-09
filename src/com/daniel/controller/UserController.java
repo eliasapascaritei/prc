@@ -64,13 +64,7 @@ public class UserController extends HttpServlet {
     	User user = new User();
         user.setFirstName(request.getParameter("firstName"));
         user.setLastName(request.getParameter("lastName"));
-        try {
-            Date dob = new SimpleDateFormat("MM/dd/yyyy").parse(request.getParameter("dob"));
-            user.setDob(dob);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        user.setEmail(request.getParameter("email"));
+        user.setCnp(request.getParameter("cnp"));
         String userid = request.getParameter("userid");
         if(userid == null || userid.isEmpty())
         {
