@@ -9,10 +9,10 @@
 </head>
 <body>
 
- <form method="POST" action='show' name="frmSearchUser">
+ <form method="POST" action='UserController?action=show' name="frmSearchUser">
   CNP : <input type="text" name="cnp"/>
             <br br br /> 
-            <a href="UserController?action=show&cnp=<c:out value="${cnp}"/>">Search</a>
+            <input type="submit" value="Search"/>
     </form>
 
 </body>

@@ -95,7 +95,17 @@ public class UserController extends HttpServlet {
 
     	User myBean = gson.fromJson(reader, User.class);
     	System.out.println("hmm: " + myBean);*/
-    	
+    	if(request.getParameter("action").equalsIgnoreCase("show")){
+    		String s = request.getParameter("cnp");
+        	System.out.println("param:   "+s);
+        	User user = dao.getUserByCnp(s);
+        	List<User> users = new ArrayList<User>();
+        	users.add(user);
+        	RequestDispatcher view = request.getRequestDispatcher(LIST_USER);
+        	request.setAttribute("users", users);
+        	view.forward(request, response);
+    	}
+    	else{
     	User user = new User();
         user.setFirstName(request.getParameter("firstName"));
         user.setLastName(request.getParameter("lastName"));
@@ -113,5 +123,6 @@ public class UserController extends HttpServlet {
         RequestDispatcher view = request.getRequestDispatcher(LIST_USER);
         request.setAttribute("users", dao.getAllUsers());
         view.forward(request, response);
+    }
     }
 }
