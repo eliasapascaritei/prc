@@ -1,4 +1,4 @@
-package com.prc.controller;
+package com.daniel.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.daniel.dao.UserDao;
+import com.daniel.model.User;
 import com.google.gson.Gson;
-import com.prc.dao.UserDao;
-import com.prc.model.User;
 
 public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -50,22 +50,41 @@ public class UserController extends HttpServlet {
         	forward = SEARCH_USER;
         }
         else if(action.equalsIgnoreCase("show")){
-        	//response.setContentType("application/json");
-        	//PrintWriter out = response.getWriter();
         	String s = request.getParameter("cnp");
         	System.out.println("param:   "+s);
-        	User users = dao.getUserByCnp(s);
-        	//out.println(users.toString());
+        	User user = dao.getUserByCnp(s);
+        	List<User> users = new ArrayList<User>();
+        	forward = LIST_USER;
+        	users.add(user);
         	request.setAttribute("users", users);
         }
         else if (action.equalsIgnoreCase("listUser")){
             forward = LIST_USER;
             request.setAttribute("users", dao.getAllUsers());
-        } else {
+        } 
+        else if(action.equalsIgnoreCase("listJson")){
+        	response.setContentType("application/json");
+        	PrintWriter out = response.getWriter();
+        	User u = new User();
+        	String s = u.JsToString();
+        	out.println(s);
+        	forward = "Json";
+        }
+        else if(action.equalsIgnoreCase("showJ")){
+        	response.setContentType("application/json");
+        	PrintWriter out = response.getWriter();
+        	String s = request.getParameter("cnp");
+        	System.out.println("param:   "+s);
+        	User users = dao.getUserByCnp(s);
+        	out.println(users.toString());
+        	forward = "Json";
+        }
+        	else {
             forward = INSERT_OR_EDIT;
         }
 
         RequestDispatcher view = request.getRequestDispatcher(forward);
+       if(!forward.equals("Json"))
         view.forward(request, response);
     }
 

@@ -1,10 +1,10 @@
-package com.prc.model;
+package com.daniel.model;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.prc.dao.UserDao;
+import com.daniel.dao.UserDao;
 
 public class User {
 
@@ -51,12 +51,15 @@ public class User {
 		List<User> users = new ArrayList<User>();
 		UserDao dao = new UserDao();
 		users = dao.getAllUsers();
+		int lastIndex = users.size()-1;
 		String s = "[";
-		for(User elem : users){
-			s += elem.toString() + ",";
+		for(int i = 0;i<users.size();i++){
+			s += users.get(i).toString() ;
+			if(i == lastIndex) 
+				s+= "]" ;
+			else s+= ",";
 			
 		}
-		s += "]";
 		return s;
 				
 	}
