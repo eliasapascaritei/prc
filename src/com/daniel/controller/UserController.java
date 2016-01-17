@@ -33,23 +33,25 @@ public class UserController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String forward="";
+        String forward = "";
         String action = request.getParameter("action");
 
-        if (action.equalsIgnoreCase("delete")){
+        if (action.equalsIgnoreCase("delete")) {
             int userId = Integer.parseInt(request.getParameter("userId"));
             dao.deleteUser(userId);
             forward = LIST_USER;
             request.setAttribute("users", dao.getAllUsers());    
-        } else if (action.equalsIgnoreCase("edit")){
+        }
+        else if (action.equalsIgnoreCase("edit")) {
             forward = INSERT_OR_EDIT;
             int userId = Integer.parseInt(request.getParameter("userId"));
             User user = dao.getUserById(userId);
             request.setAttribute("user", user);
-        }else if(action.equalsIgnoreCase("search")){
+        }
+        else if(action.equalsIgnoreCase("search")) {
         	forward = SEARCH_USER;
         }
-        else if(action.equalsIgnoreCase("show")){
+        else if(action.equalsIgnoreCase("show")) {
         	String s = request.getParameter("cnp");
         	System.out.println("param:   "+s);
         	User user = dao.getUserByCnp(s);
@@ -58,11 +60,11 @@ public class UserController extends HttpServlet {
         	users.add(user);
         	request.setAttribute("users", users);
         }
-        else if (action.equalsIgnoreCase("listUser")){
+        else if (action.equalsIgnoreCase("listUser")) {
             forward = LIST_USER;
             request.setAttribute("users", dao.getAllUsers());
         } 
-        else if(action.equalsIgnoreCase("listJson")){
+        else if(action.equalsIgnoreCase("listJson")) {
         	response.setContentType("application/json");
         	PrintWriter out = response.getWriter();
         	User u = new User();
@@ -70,7 +72,7 @@ public class UserController extends HttpServlet {
         	out.println(s);
         	forward = "Json";
         }
-        else if(action.equalsIgnoreCase("showJ")){
+        else if(action.equalsIgnoreCase("showJ")) {
         	response.setContentType("application/json");
         	PrintWriter out = response.getWriter();
         	String s = request.getParameter("cnp");
@@ -79,50 +81,58 @@ public class UserController extends HttpServlet {
         	out.println(users.toString());
         	forward = "Json";
         }
-        	else {
+        else {
             forward = INSERT_OR_EDIT;
         }
 
-        RequestDispatcher view = request.getRequestDispatcher(forward);
-       if(!forward.equals("Json"))
-        view.forward(request, response);
+        if(!forward.equals("Json")) {
+        	RequestDispatcher view = request.getRequestDispatcher(forward);
+        	view.forward(request, response);
+        }
+        
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-    	/*BufferedReader reader = request.getReader();
-    	Gson gson = new Gson();
-
-    	User myBean = gson.fromJson(reader, User.class);
-    	System.out.println("hmm: " + myBean);*/
-    	if(request.getParameter("action").equalsIgnoreCase("show")){
-    		String s = request.getParameter("cnp");
-        	System.out.println("param:   "+s);
-        	User user = dao.getUserByCnp(s);
-        	List<User> users = new ArrayList<User>();
-        	users.add(user);
-        	RequestDispatcher view = request.getRequestDispatcher(LIST_USER);
-        	request.setAttribute("users", users);
-        	view.forward(request, response);
+    	System.out.println("params: " + request.getParameterMap());
+    	String action = request.getParameter("action");
+    	if (action != null && action.equalsIgnoreCase("addJson")) {
+    		User user = new User();
+	        user.setFirstName(request.getParameter("firstName"));
+	        user.setLastName(request.getParameter("lastName"));
+	        user.setCnp(request.getParameter("cnp"));
+	        String userid = request.getParameter("userid");
+	        boolean saved = false;
+	        if (userid == null || userid.isEmpty()) {
+	            saved = dao.addUser(user);
+	        }
+	        else {
+	            user.setUserid(Integer.parseInt(userid));
+	            saved = dao.updateUser(user);
+	        }
+	        
+	        PrintWriter out = response.getWriter();
+	        String res = "{ \"saved\":" + saved + " }";
+	        out.println(res);
     	}
-    	else{
-    	User user = new User();
-        user.setFirstName(request.getParameter("firstName"));
-        user.setLastName(request.getParameter("lastName"));
-        user.setCnp(request.getParameter("cnp"));
-        String userid = request.getParameter("userid");
-        if(userid == null || userid.isEmpty())
-        {
-            dao.addUser(user);
-        }
-        else
-        {
-            user.setUserid(Integer.parseInt(userid));
-            dao.updateUser(user);
-        }
-        RequestDispatcher view = request.getRequestDispatcher(LIST_USER);
-        request.setAttribute("users", dao.getAllUsers());
-        view.forward(request, response);
-    }
+    	else {
+	    	User user = new User();
+	        user.setFirstName(request.getParameter("firstName"));
+	        user.setLastName(request.getParameter("lastName"));
+	        user.setCnp(request.getParameter("cnp"));
+	        String userid = request.getParameter("userid");
+	        if(userid == null || userid.isEmpty())
+	        {
+	            dao.addUser(user);
+	        }
+	        else
+	        {
+	            user.setUserid(Integer.parseInt(userid));
+	            dao.updateUser(user);
+	        }
+	        RequestDispatcher view = request.getRequestDispatcher(LIST_USER);
+	        request.setAttribute("users", dao.getAllUsers());
+	        view.forward(request, response);
+    	}
     }
 }

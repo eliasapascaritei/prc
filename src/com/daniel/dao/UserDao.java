@@ -21,7 +21,7 @@ public class UserDao {
 		connection = DbUtil.getConnection();
 	}
 
-	public void addUser(User user) {
+	public boolean addUser(User user) {
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("insert into users values (?, ?, ?, ? )");
@@ -31,9 +31,10 @@ public class UserDao {
 			preparedStatement.setString(3, user.getLastName());
 			preparedStatement.setString(4, user.getCnp());
 			preparedStatement.executeUpdate();
-
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 	
@@ -50,7 +51,7 @@ public class UserDao {
 		}
 	}
 	
-	public void updateUser(User user) {
+	public boolean updateUser(User user) {
 		try {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("update users set firstname=?, lastname=?, cnp=?" +
@@ -62,9 +63,10 @@ public class UserDao {
 			preparedStatement.setString(3, user.getCnp());
 			preparedStatement.setInt(4, user.getUserid());
 			preparedStatement.executeUpdate();
-
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
