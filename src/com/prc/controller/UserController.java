@@ -1,4 +1,4 @@
-package com.daniel.controller;
+package com.prc.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.daniel.dao.UserDao;
-import com.daniel.model.User;
+import com.prc.dao.UserDao;
+import com.prc.model.User;
 import com.google.gson.Gson;
 
 public class UserController extends HttpServlet {

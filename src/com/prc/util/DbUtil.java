@@ -1,4 +1,4 @@
-package com.daniel.util;
+package com.prc.util;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.daniel.dao;
+package com.prc.dao;
 
 import java.io.Console;
 import java.sql.Connection;
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.daniel.model.User;
-import com.daniel.util.DbUtil;
+import com.prc.model.User;
+import com.prc.util.DbUtil;
 
 public class UserDao {
 
